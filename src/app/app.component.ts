@@ -1,26 +1,89 @@
 import { Component } from '@angular/core';
+import { Hero } from './hero';
 
-export class Hero {
-  id: number;
-  name: string;
-}
+const HEROES: Hero[] = [
+  { id: 11, name: 'Hero 1' },
+  { id: 12, name: 'B' },
+  { id: 13, name: 'C' },
+  { id: 14, name: 'D' },
+  { id: 15, name: 'E' },
+  { id: 16, name: 'F' },
+  { id: 17, name: 'G' },
+  { id: 18, name: 'H' },
+  { id: 19, name: 'I' },
+  { id: 20, name: 'J' }
+];
 
 @Component({
   selector: 'app-root',
+  styles: [`
+  .selected {
+    background-color: #CFD8DC !important;
+    color: white;
+  }
+  .heroes {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .heroes li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+  }
+  .heroes li.selected:hover {
+    background-color: #BBD8DC !important;
+    color: white;
+  }
+  .heroes li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .5em;
+  }
+  .heroes .text {
+    position: relative;
+    top: -3px;
+  }
+  .heroes .badge {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color: #607D8B;
+    line-height: 1em;
+    position: relative;
+    left: -1px;
+    top: -4px;
+    height: 1.8em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+  }
+`],
   template: `
     <h1>{{title}}</h1>
-    <h2>{{hero.name}} details</h2>
-    <div><label>id: </label>{{hero.id}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="hero.name" placeholder="name">
-    </div>
+    <h2>My Heroes</h2>
+    <ul class="heroes">
+      <li *ngFor="let hero of heroes" 
+          [class.selected]="hero === selectedHero"
+          (click)="onSelect(hero)">
+          <span class="badge">{{hero.id}}</span> {{hero.name}}
+      </li>
+    </ul>
+    <hero-detail [hero]="selectedHero"></hero-detail>
   `,
 })
 export class AppComponent {
   title = 'Tour of Heros';
-  hero: Hero = {
-    id: 1,
-    name: 'Windstorm'
-  };
+  heroes = HEROES;
+  selectedHero: Hero;
+
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+  }
 }
