@@ -8,7 +8,7 @@ import { HeroDetailComponent} from './hero-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeroDetailComponent
+    HeroDetailComponent,
   ],
   imports: [
     BrowserModule,
